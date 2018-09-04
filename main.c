@@ -66,24 +66,24 @@ magicKey_t searchForMagicBytes()
         
    
         
-    if(magicByte32 == 0xBADAADBA)
+    if(magicByte32 == 0xA00BC00D)
     {
         printf("Got a start sector magic number! \n");
         return START_SECTOR;
     }
-    else if(magicByte32 == 0xF00DD000)
+    else if(magicByte32 == 0x1BB11BB1)
     {
         printf("Got a start block magic number! \n");
         return START_BLOCK;
     }
     
     //end magic numbers are 5bytes (why?)
-    if(magicByte64 == 0xD00Dd00Dd0ull)
+    if(magicByte64 == 0xC22CC02CC2ull)
     {
         printf("Got an end block magic number! \n");
         return END_BLOCK;
     }
-    else if(magicByte64 == 0xDEADDEADDEull)
+    else if(magicByte64 == 0xD33DD33DD3ull)
     {
         printf("Got a end sector magic number! \n");
         return END_SECTOR;
@@ -124,7 +124,7 @@ static void processIncomingData(char in)
         else if(END_BLOCK  == key)  
         {
             //got the first sector, go to next state 
-            printf("Processed the first block of a sector \n");
+            //printf("Processed the first block of a sector \n");
             validator.currentBlockState = PROCESSING_MIDDLE_BLOCK;
             validator.blockIndex = 0;
             break;
@@ -217,7 +217,7 @@ int main()
         
         char tmp = (unsigned char)string[counter++];
         processIncomingData(tmp);
-        printf("%d :  %1x \n",counter,(unsigned char)tmp);
+        //printf("%d :  %1x \n",counter,(unsigned char)tmp);
         fwrite (&tmp , sizeof(char), 1, ptr_myfile2);
     }
 
